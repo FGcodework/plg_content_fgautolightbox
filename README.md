@@ -1,15 +1,15 @@
-<p align="center">
+﻿<p align="center">
   <img src="assets/logo.png" alt="FG AutoLightbox" width="128">
 </p>
 
 <h1 align="center">FG AutoLightbox plugin for Joomla</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/github/v/release/ferino75/plg_content_fgautolightbox?color=FF6B4A&label=release" alt="Latest release">
+  <img src="https://img.shields.io/github/v/release/FGcodework/plg_content_fgautolightbox?color=FF6B4A&label=release" alt="Latest release">
   <img src="https://img.shields.io/badge/Joomla-3.10%20%7C%204%20%7C%205%20%7C%206-blue.svg" alt="Joomla">
   <img src="https://img.shields.io/badge/PHP-7.4%2B-purple.svg" alt="PHP">
   <img src="https://img.shields.io/badge/license-GPL--2.0-green.svg" alt="License">
-  <img src="https://img.shields.io/github/downloads/ferino75/plg_content_fgautolightbox/total" alt="Downloads">
+  <img src="https://img.shields.io/github/downloads/FGcodework/plg_content_fgautolightbox/total" alt="Downloads">
 </p>
 
 A Joomla content plugin that automatically turns every image in your
@@ -29,7 +29,7 @@ This repository contains **two separate builds**:
 | **Classic** | repository root (this README) | 3.10 – 6.x | 7.4+ | Frozen — feature-complete, still works, but no longer under active development |
 | **Native** | [`joomla6/`](joomla6/) | 6.0+ only | 8.3+ | Actively developed — PSR-4, constructor DI, `WebAssetManager`, PHP 8.3+ syntax |
 
-**If you're on Joomla 3.10** (or any J3.x), use the classic build [v1.3.2](https://github.com/ferino75/plg_content_fgautolightbox/releases/tag/v1.3.2) — it's
+**If you're on Joomla 3.10** (or any J3.x), use the classic build [v1.3.2](https://github.com/FGcodework/plg_content_fgautolightbox/releases/tag/v1.3.2) — it's
 the only one that works there, and it isn't going anywhere.
 
 **If you're on Joomla 6**, either build works today, but new features and
@@ -79,7 +79,7 @@ gap: editors change nothing, administrators install one plugin.
 ## Installation
 
 1. Download the latest `plg_content_fgautolightbox_vX.Y.Z.zip` from
-   [Releases](https://github.com/ferino75/plg_content_fgautolightbox/releases)
+   [Releases](https://github.com/FGcodework/plg_content_fgautolightbox/releases)
 2. In Joomla admin: **System → Install → Extensions**, upload the ZIP
 3. Go to **System → Plugins**, search for `AutoLightbox`, and enable
    **Content - FG AutoLightbox**

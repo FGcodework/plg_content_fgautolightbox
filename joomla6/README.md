@@ -1,4 +1,4 @@
-# Content - FG AutoLightbox — Joomla 6 native build
+﻿# Content - FG AutoLightbox — Joomla 6 native build
 
 This is the **native, Joomla-6-only** build. Requires **Joomla 6.0+ and
 PHP 8.3+**. If you're on Joomla 3.10, use the classic build in the
@@ -17,7 +17,7 @@ the full technical breakdown.
 ## Installation
 
 1. Download the latest `plg_content_fgautolightbox_joomla6_vX.Y.Z.zip`
-   from [Releases](https://github.com/ferino75/plg_content_fgautolightbox/releases)
+   from [Releases](https://github.com/FGcodework/plg_content_fgautolightbox/releases)
    (tagged `joomla6-vX.Y.Z`, distinct from the classic build's plain
    `vX.Y.Z` tags)
 2. In Joomla admin: **System → Install → Extensions**, upload the ZIP

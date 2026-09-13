@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <extension version="3.0" type="plugin" group="content" method="upgrade">
     <name>PLG_CONTENT_FGAUTOLIGHTBOX</name>
     <author>FG</author>
@@ -18,7 +18,7 @@
         <language tag="sk-SK">sk-SK/sk-SK.plg_content_fgautolightbox.sys.ini</language>
     </languages>
     <updateservers>
-        <server type="extension" priority="1" name="Content - FG AutoLightbox Update Site">https://raw.githubusercontent.com/ferino75/plg_content_fgautolightbox/master/updates.xml</server>
+        <server type="extension" priority="1" name="Content - FG AutoLightbox Update Site">https://raw.githubusercontent.com/FGcodework/plg_content_fgautolightbox/master/updates.xml</server>
     </updateservers>
     <config>
         <fields name="params">

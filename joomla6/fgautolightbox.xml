@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="content" method="upgrade">
     <name>PLG_CONTENT_FGAUTOLIGHTBOX</name>
     <author>FG</author>
     <authorEmail>ferino@atlas.sk</authorEmail>
-    <authorUrl>https://github.com/ferino75</authorUrl>
+    <authorUrl>https://github.com/FGcodework</authorUrl>
     <copyright>Copyright (C) 2026 FG. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <creationDate>2026-08-23</creationDate>
@@ -27,7 +27,7 @@
         <language tag="sk-SK">sk-SK/sk-SK.plg_content_fgautolightbox.sys.ini</language>
     </languages>
     <updateservers>
-        <server type="extension" priority="1" name="Content - FG AutoLightbox (Joomla 6) Update Site">https://raw.githubusercontent.com/ferino75/plg_content_fgautolightbox/master/joomla6/updates.xml</server>
+        <server type="extension" priority="1" name="Content - FG AutoLightbox (Joomla 6) Update Site">https://raw.githubusercontent.com/FGcodework/plg_content_fgautolightbox/master/joomla6/updates.xml</server>
     </updateservers>
     <config>
         <fields name="params">
