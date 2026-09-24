@@ -1,12 +1,16 @@
-# FG AutoLightbox plugin for Joomla
+<p align="center">
+  <img src="assets/logo.png" alt="FG AutoLightbox" width="120">
+</p>
 
-[![FG AutoLightbox](assets/logo.png)](assets/logo.png)
+<h1 align="center">FG AutoLightbox plugin for Joomla</h1>
 
-[![Latest release](https://img.shields.io/github/v/release/FGcodework/plg_content_fgautolightbox?color=FF6B4A&label=release)](https://github.com/FGcodework/plg_content_fgautolightbox/releases)
-[![Joomla](https://img.shields.io/badge/Joomla-6.0%2B-blue.svg)](https://github.com/FGcodework/plg_content_fgautolightbox)
-[![PHP](https://img.shields.io/badge/PHP-8.3%2B-purple.svg)](https://github.com/FGcodework/plg_content_fgautolightbox)
-[![License](https://img.shields.io/badge/license-GPL--2.0-green.svg)](LICENSE.txt)
-[![Downloads](https://img.shields.io/github/downloads/FGcodework/plg_content_fgautolightbox/total)](https://github.com/FGcodework/plg_content_fgautolightbox/releases)
+<p align="center">
+  <a href="https://github.com/FGcodework/plg_content_fgautolightbox/releases"><img src="https://img.shields.io/github/v/release/FGcodework/plg_content_fgautolightbox?color=FF6B4A&label=release" alt="Latest release"></a>
+  <a href="https://github.com/FGcodework/plg_content_fgautolightbox"><img src="https://img.shields.io/badge/Joomla-6.0%2B-blue.svg" alt="Joomla"></a>
+  <a href="https://github.com/FGcodework/plg_content_fgautolightbox"><img src="https://img.shields.io/badge/PHP-8.3%2B-purple.svg" alt="PHP"></a>
+  <a href="LICENSE.txt"><img src="https://img.shields.io/badge/license-GPL--2.0-green.svg" alt="License"></a>
+  <a href="https://github.com/FGcodework/plg_content_fgautolightbox/releases"><img src="https://img.shields.io/github/downloads/FGcodework/plg_content_fgautolightbox/total" alt="Downloads"></a>
+</p>
 
 A Joomla content plugin that automatically turns every image in your
 articles into a lightbox gallery — with **no work required from your
