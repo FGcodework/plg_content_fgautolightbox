@@ -1,51 +1,26 @@
-﻿<p align="center">
-  <img src="assets/logo.png" alt="FG AutoLightbox" width="128">
-</p>
+# FG AutoLightbox plugin for Joomla
 
-<h1 align="center">FG AutoLightbox plugin for Joomla</h1>
+[![FG AutoLightbox](assets/logo.png)](assets/logo.png)
 
-<p align="center">
-  <img src="https://img.shields.io/github/v/release/FGcodework/plg_content_fgautolightbox?color=FF6B4A&label=release" alt="Latest release">
-  <img src="https://img.shields.io/badge/Joomla-3.10%20%7C%204%20%7C%205%20%7C%206-blue.svg" alt="Joomla">
-  <img src="https://img.shields.io/badge/PHP-7.4%2B-purple.svg" alt="PHP">
-  <img src="https://img.shields.io/badge/license-GPL--2.0-green.svg" alt="License">
-  <img src="https://img.shields.io/github/downloads/FGcodework/plg_content_fgautolightbox/total" alt="Downloads">
-</p>
+[![Latest release](https://img.shields.io/github/v/release/FGcodework/plg_content_fgautolightbox?color=FF6B4A&label=release)](https://github.com/FGcodework/plg_content_fgautolightbox/releases)
+[![Joomla](https://img.shields.io/badge/Joomla-6.0%2B-blue.svg)](https://github.com/FGcodework/plg_content_fgautolightbox)
+[![PHP](https://img.shields.io/badge/PHP-8.3%2B-purple.svg)](https://github.com/FGcodework/plg_content_fgautolightbox)
+[![License](https://img.shields.io/badge/license-GPL--2.0-green.svg)](LICENSE.txt)
+[![Downloads](https://img.shields.io/github/downloads/FGcodework/plg_content_fgautolightbox/total)](https://github.com/FGcodework/plg_content_fgautolightbox/releases)
 
 A Joomla content plugin that automatically turns every image in your
 articles into a lightbox gallery — with **no work required from your
 content editors**. They keep inserting images exactly as they always
 have; the plugin does the rest.
 
-No jQuery, no external lightbox library, no build step.
-
-
-## Two builds
-
-This repository contains **two separate builds**:
-
-| | Location | Joomla | PHP | Status |
-|---|---|---|---|---|
-| **Classic** | repository root (this README) | 3.10 – 6.x | 7.4+ | Frozen — feature-complete, still works, but no longer under active development |
-| **Native** | [`joomla6/`](joomla6/) | 6.0+ only | 8.3+ | Actively developed — PSR-4, constructor DI, `WebAssetManager`, PHP 8.3+ syntax |
-
-**If you're on Joomla 3.10** (or any J3.x), use the classic build [v1.3.2](https://github.com/FGcodework/plg_content_fgautolightbox/releases/tag/v1.3.2) — it's
-the only one that works there, and it isn't going anywhere.
-
-**If you're on Joomla 6**, either build works today, but new features and
-fixes will only land in the [native `joomla6/` build](joomla6/) going
-forward. The two are functionally identical from a site administrator's
-point of view (same settings, same behavior) — the native build is a
-from-scratch architectural rewrite, not a feature upgrade. See
-[`joomla6/CHANGELOG.md`](joomla6/CHANGELOG.md) for what's different
-under the hood.
-
-They install as the same plugin element, so a given site should only
-ever have **one of the two** installed, never both at once.
+No jQuery, no external lightbox library, no build step. Native Joomla 6
+architecture: PSR-4, constructor dependency injection via
+`services/provider.php`, `WebAssetManager` for JS/CSS, PHP 8.3+ syntax
+(enums, readonly properties, `match` expressions).
 
 ## Why
 
-Most "auto lightbox" plugins either stopped supporting Joomla 3, moved
+Most "auto lightbox" plugins either stopped receiving updates, moved
 the useful bits behind a paid tier, or require editors to learn a tag
 syntax like `{gallery}folder{/gallery}`. This one was built to fill that
 gap: editors change nothing, administrators install one plugin.
@@ -53,28 +28,39 @@ gap: editors change nothing, administrators install one plugin.
 ## Features
 
 - **Zero editor workflow change** — images inserted normally through
-  TinyMCE/JCE are picked up automatically
-- **Wide Joomla support** — one package works on Joomla 3.10, 4, 5 and 6
-- **No dependencies** — self-contained vanilla JS/CSS, works whether or
-  not jQuery is present
-- Keyboard navigation (`Esc`, `←`, `→`) and touch swipe gestures
-- Open/close animations, neighbouring-image preloading, `X / Y` counter
+  TinyMCE/JCE are picked up automatically, including images an editor
+  already wrapped in their own link (e.g. a "link to full-size image"
+  option) — the existing link is upgraded in place rather than ignored
+- **No dependencies** — self-contained vanilla JS/CSS, no jQuery, no
+  build step
+- Keyboard navigation (`Esc`, `←`, `→`) and touch swipe gestures (with
+  correct pinch-zoom handling — the swipe handler never blocks a
+  multi-finger gesture)
+- Open/close animations, neighbouring-image preloading, `X / Y` counter,
+  with full `prefers-reduced-motion` support
 - Per-article grouping — on a category page, arrows navigate only within
   the article you clicked in
 - Handles images added after page load (AJAX, infinite scroll) via
   `MutationObserver` — with an optional CSS selector to scope watching
   to just the content area, for better performance on very dynamic pages
-- Lazy-load aware — prefers `data-src` over `src` when present
+- Lazy-load aware — configurable priority between `data-src` and
+  `srcset`, since different lazy-load libraries use `data-src` for
+  opposite purposes
 - **Responsive images done right** — picks the best available resolution
-  in order: `data-full`/`data-highres` (explicit override) → `data-src` →
-  the largest candidate in `srcset` → plain `src`. Works with `<picture>`
-  elements too (scans every `<source>`), without breaking the browser's
-  native responsive/format switching for the page's normal display
+  in order: `data-full`/`data-highres` (explicit override) → `data-src`
+  → the largest candidate in `srcset` → plain `src` (or the reverse
+  `data-src`/`srcset` priority, if your site's lazy-load setup needs
+  it). Works with `<picture>` elements too (scans every `<source>`),
+  and lets the browser pick the right image size for the viewport
+  instead of always fetching the largest candidate
 - Extensible beyond the built-in components (`com_content`, `com_contact`,
   `com_newsfeeds`) — add K2, Zoo, or any custom component via a setting
 - Accessible: `role="dialog"`, `aria-modal`, real `<button>` controls with
-  `aria-label`, focus trap, and screen-reader alt text that stays present
-  even when visible captions are turned off
+  `aria-label`, a focus trap reinforced with `inert` on background
+  content, `aria-live` announcements on navigation, and screen-reader
+  alt text that stays present even when visible captions are turned off
+- A broken image shows a clear error message instead of getting stuck
+  on a permanent loading spinner
 
 ## Installation
 
@@ -86,25 +72,38 @@ gap: editors change nothing, administrators install one plugin.
 
 That's it — existing articles work immediately, no content changes needed.
 
+### Upgrading from an older (pre-2.0) release
+
+Versions before 2.0 used a different internal architecture (a single
+flat PHP file, supporting Joomla 3.10 through 6 from one codebase).
+If a site still has one of those installed, install this version the
+same way as above — Joomla treats it as a normal update to the same
+plugin element, no separate uninstall step needed. Joomla 3.10 itself
+is no longer supported; the last release that works there is
+[v1.3.2](https://github.com/FGcodework/plg_content_fgautolightbox/releases/tag/v1.3.2),
+which remains available on the Releases page but no longer receives
+updates.
+
 ## Configuration
 
 All settings are optional; the defaults are sensible for a typical site.
 
-| Setting | Default | What it does |
-|---|---|---|
-| Gallery group name | `autolightbox-gallery` | Internal identifier used to group images for arrow navigation |
-| Extra link CSS class | `autolightbox` | Optional extra class on the generated link, for your own styling |
-| Exclude CSS classes | *(empty)* | Comma-separated list; images carrying any of these classes are skipped (e.g. `logo, banner, no-lightbox`) |
-| Caption under image | Alt text | Alt text / file name / none |
-| Show caption on mobile too | No | Captions are hidden on small screens by default so the image gets maximum space |
-| Exclude components | *(empty)* | Comma-separated component names to skip (e.g. `com_contact`) |
-| Extra allowed contexts | *(empty)* | Comma-separated contexts to process beyond the built-in ones — exact (`com_k2.item`) or a whole component via wildcard (`com_k2.*` or just `com_k2`); useful for K2, Zoo, custom components |
-| Exclude pages/URLs | *(empty)* | Comma-separated substrings matched against the page URL |
-| Allowed file extensions | `jpg,jpeg,png,gif,webp,avif` | Only these get a lightbox. SVG is excluded by default since it can carry embedded scripts |
-| Watch for dynamically added images | Yes | Enables the `MutationObserver`; disable on pages with a very busy DOM |
-| Watch container (CSS selector) | *(empty)* | Scope the `MutationObserver` to matching container(s) (e.g. `.item-page, .blog`) instead of the whole page, for better performance. Falls back to the whole page if the selector matches nothing |
-| Enable gallery navigation | Yes | Disable for a single-image viewer — no prev/next arrows, counter, or keyboard/swipe navigation between images |
-| Preload adjacent images | Yes | Fetches the previous/next image in the background while the lightbox is open, for smoother navigation. Disable on very large galleries to skip the extra downloads |
+| Setting                            | Default                      | What it does                                                                                                                                                                                     |
+| ----------------------------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Gallery group name                 | `autolightbox-gallery`       | Internal identifier used to group images for arrow navigation                                                                                                                                    |
+| Extra link CSS class               | `autolightbox`               | Optional extra class on the generated link, for your own styling                                                                                                                                 |
+| Exclude CSS classes                | *(empty)*                    | Comma-separated list; images (or their wrapping element, up to a few levels up — e.g. a `figure` or `div`) carrying any of these classes are skipped (e.g. `logo, banner, no-lightbox`)          |
+| Caption under image                | Alt text                     | Alt text / file name / none                                                                                                                                                                      |
+| Show caption on mobile too         | No                           | Captions are hidden on small screens by default so the image gets maximum space                                                                                                                  |
+| Extra allowed contexts             | *(empty)*                    | Comma-separated contexts to process beyond the built-in ones — exact (`com_k2.item`) or a whole component via wildcard (`com_k2.*` or just `com_k2`); useful for K2, Zoo, custom components      |
+| Exclude components                 | *(empty)*                    | Comma-separated component names to skip (e.g. `com_contact`)                                                                                                                                     |
+| Exclude pages/URLs                 | *(empty)*                    | Comma-separated patterns matched against the page URL, with word-boundary awareness by default (`/12` matches `/12` or `/path/12`, but not `/120`); add `*` for deliberate broader matching (`/kontakt*`) |
+| Allowed file extensions            | `jpg,jpeg,png,gif,webp,avif` | Only these get a lightbox. SVG is excluded by default since it can carry embedded scripts. An empty list falls back to this same safe default rather than allowing everything                   |
+| Prefer srcset over data-src        | No (`data-src` wins)         | Some lazy-load libraries use `data-src` for the real full-size image (default), others use it only for a small placeholder while the real image lives in `srcset` — flip this if your lightbox opens a small/blurry thumbnail |
+| Enable gallery navigation          | Yes                          | Disable for a single-image viewer — no prev/next arrows, counter, or keyboard/swipe navigation between images                                                                                    |
+| Preload adjacent images            | Yes                          | Fetches the previous/next image in the background while the lightbox is open, for smoother navigation. Disable on very large galleries to skip the extra downloads                               |
+| Watch for dynamically added images | No                           | Enables the `MutationObserver` for images added after page load (AJAX, infinite scroll, sliders). Off by default since it isn't free — turn it on only if your site actually needs it            |
+| Watch container (CSS selector)     | *(empty)*                    | Only relevant if the above is enabled. Scope the `MutationObserver` to matching container(s) (e.g. `.item-page, .blog`) instead of the whole page, for better performance                        |
 
 ## Theming
 
@@ -125,17 +124,24 @@ restyle it from your template's CSS without touching the plugin:
 }
 ```
 
-## Compatibility notes
+## Architecture
 
-The plugin ships a single codebase that adapts at load time:
+PSR-4 namespaced classes (`FG\Plugin\Content\Fgautolightbox\...`),
+constructor dependency injection wired up in `services/provider.php`,
+and Joomla's `WebAssetManager` for CSS/JS delivery — no legacy
+`JPlugin`/positional-argument code paths. The core HTML-processing logic
+(`HtmlProcessor` and its collaborators under `src/Support/`) has zero
+Joomla API surface, so it can be unit-tested in complete isolation.
+See [CHANGELOG.md](CHANGELOG.md) for the detailed history of how this
+came together, including several real bugs found and fixed by testing
+directly on live sites.
 
-- On **Joomla 4/5/6** it registers via the modern `SubscriberInterface` /
-  `getSubscribedEvents()` API
-- On **Joomla 3.10** it falls back to the classic positional
-  `onContentPrepare()` signature
+## Requirements
 
-Detection is automatic (`interface_exists()`), so the same ZIP installs
-everywhere. Tested in production on Joomla 3.10 and Joomla 6.1.2.
+- Joomla 6.0 or later
+- PHP 8.3 or later
+- `dom`, `json`, `mbstring` PHP extensions (all standard Joomla 6
+  requirements already)
 
 ## Conflicts with other lightboxes
 
@@ -146,20 +152,11 @@ bundle GLightbox. Inspect the opened overlay: this plugin's markup always
 uses `id="alb-overlay"`. If you see something else, disable that
 extension's auto-lightbox behaviour.
 
-## Upgrading from `plg_content_autolightbox`
-
-Version 1.1.0 renamed the plugin element to align with the FG series.
-Joomla therefore treats it as a **new** extension, not an update:
-
-1. Install `plg_content_fgautolightbox`
-2. Uninstall (or at least disable) the old `Content - AutoLightbox`
-
-Leaving both enabled would process every image twice.
-
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md) for the full history.
+See [CHANGELOG.md](CHANGELOG.md) for the full history, including the
+classic (Joomla 3.10–6) build's history prior to the native rewrite.
 
 ## License
 
-GPL-2.0-or-later. See [LICENSE](LICENSE).
+GPL-2.0-or-later. See [LICENSE.txt](LICENSE.txt).

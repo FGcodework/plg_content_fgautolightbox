@@ -47,6 +47,15 @@
     transition:opacity 0.18s ease;
 }
 #alb-img.alb-loading { opacity:0.25; }
+/* Pri chybe načítania skryť rozbitú ikonu prehliadača (a zvyškovú
+   priehľadnosť z alb-loading) - samotná chybová správa je v #alb-error. */
+#alb-img.alb-error { opacity:0; }
+#alb-error {
+    color:var(--alb-caption-color); font-size:var(--alb-caption-size);
+    text-align:center; padding:24px 10px;
+    display:none;
+}
+#alb-error.alb-visible-error { display:block; }
 @media (min-width:600px) {
     #alb-wrap { width:92vw; }
     #alb-img { max-width:88vw; max-height:82vh; box-shadow:0 4px 40px rgba(0,0,0,0.6); }
@@ -121,3 +130,32 @@
 
 /* Pevná funkčná trieda - vždy pridaná pluginom, nezávislá od "link_class" nastavenia */
 a.alb-link { cursor:zoom-in; }
+
+/* Návštevníci s prefers-reduced-motion (nastavenie OS/prehliadača pre
+   citlivosť na pohyb) nedostanú animovaný fade/scale prechod - stavy
+   (viditeľné/skryté, otvorené/zatvorené) sa aplikujú OKAMŽITE, len bez
+   animovanej interpolácie. Funkčne sa nič nemení, len sa vynechá samotný
+   pohyb/blikanie priehľadnosti. */
+@media (prefers-reduced-motion: reduce) {
+    #alb-overlay,
+    #alb-wrap,
+    #alb-img,
+    #alb-caption,
+    #alb-close,
+    #alb-prev,
+    #alb-next,
+    #alb-counter {
+        transition:none !important;
+    }
+    #alb-wrap {
+        transform:translate(-50%,-50%) scale(1) !important;
+    }
+}
+
+/* Ak by bol lightbox otvorený v momente, keď návštevník vytlačí stránku
+   (Ctrl+P), overlay by sa inak vytlačil tiež - celoobrazovkový tmavý
+   panel navyše k samotnému obsahu stránky. Pri tlači sa preto úplne
+   skryje. */
+@media print {
+    #alb-overlay { display:none !important; }
+}

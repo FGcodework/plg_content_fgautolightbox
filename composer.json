@@ -1,6 +1,6 @@
 {
     "name": "fg/plg-content-fgautolightbox",
-    "description": "Content - FG AutoLightbox (Joomla 6 native build)",
+    "description": "Content - FG AutoLightbox",
     "type": "joomla-plugin",
     "license": "GPL-2.0-or-later",
     "authors": [
