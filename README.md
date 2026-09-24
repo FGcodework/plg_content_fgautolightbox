@@ -10,6 +10,7 @@
   <a href="https://github.com/FGcodework/plg_content_fgautolightbox"><img src="https://img.shields.io/badge/PHP-8.3%2B-purple.svg" alt="PHP"></a>
   <a href="LICENSE.txt"><img src="https://img.shields.io/badge/license-GPL--2.0-green.svg" alt="License"></a>
   <a href="https://github.com/FGcodework/plg_content_fgautolightbox/releases"><img src="https://img.shields.io/github/downloads/FGcodework/plg_content_fgautolightbox/total" alt="Downloads"></a>
+  <a href="https://ko-fi.com/FGcodework"><img src="https://img.shields.io/badge/support-Ko--fi-F16061.svg?logo=ko-fi&logoColor=white" alt="Support on Ko-fi"></a>
 </p>
 
 A Joomla content plugin that automatically turns every image in your
@@ -160,6 +161,14 @@ extension's auto-lightbox behaviour.
 
 See [CHANGELOG.md](CHANGELOG.md) for the full history, including the
 classic (Joomla 3.10–6) build's history prior to the native rewrite.
+
+## Support this project
+
+This plugin is free, open source, and always will be — no feature is
+locked behind a paywall. If it's saved your editors some manual work,
+you can leave a one-off tip on Ko-fi. Entirely optional either way.
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/FGcodework)
 
 ## License
 
