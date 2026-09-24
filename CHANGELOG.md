@@ -13,6 +13,30 @@ this file merges both changelogs into one continuous history: the
 native build's entries (2.x, current) first, followed by the classic
 build's entries (1.x, historical/frozen) below.
 
+## 2.3.10
+Added a "Plugin" info tab to the admin settings screen, matching the
+pattern already used on other plugins in the FG series (e.g. FG Editor
+Switcher).
+
+- Restructured the config form into two tabs: the default fieldset now
+  holds a single `note`-type field ("Support this plugin") with a short
+  message and links to Ko-fi and the FG series' project listing
+  (`fgcodework.github.io`) - Joomla renders this fieldset's tab as
+  "Plugin" by its own default convention. All the plugin's actual
+  settings moved into a newly named `settings` fieldset, shown as its
+  own "Settings" tab.
+- No functional change to any existing setting - same fields, same
+  names, same defaults, same stored parameter keys. Verified this with
+  a functional smoke test confirming every class that reads plugin
+  parameters still behaves identically (fieldset structure is a purely
+  presentational Joomla concept; it has no bearing on how
+  `$params->get()` reads stored values).
+- Added the three new language constants
+  (`FIELD_SUPPORT_LABEL`/`_DESC`, `FIELDSET_SETTINGS`) to both English
+  and Slovak, and cross-checked every constant referenced in the
+  manifest against both language files - confirmed nothing is missing
+  in either.
+
 ## 2.3.9
 JED Checker flagged all 9 PHP source files as missing a GPL license
 notice (a JED submission requirement, separate from the manifest-level
