@@ -8,8 +8,9 @@
   <a href="https://github.com/FGcodework/plg_content_fgautolightbox/releases"><img src="https://img.shields.io/github/v/release/FGcodework/plg_content_fgautolightbox?color=FF6B4A&label=release" alt="Latest release"></a>
   <a href="https://github.com/FGcodework/plg_content_fgautolightbox"><img src="https://img.shields.io/badge/Joomla-6.0%2B-blue.svg" alt="Joomla"></a>
   <a href="https://github.com/FGcodework/plg_content_fgautolightbox"><img src="https://img.shields.io/badge/PHP-8.3%2B-purple.svg" alt="PHP"></a>
+  <a href="https://extensions.joomla.org/extension/photos-a-images/fg-autolightbox/"><img src="https://img.shields.io/badge/Joomla!%20Extensions%20Directory%E2%84%A2-AutoLightbox-blue" alt="JED"></a>
   <a href="LICENSE.txt"><img src="https://img.shields.io/badge/license-GPL--2.0-green.svg" alt="License"></a>
-  <a href="https://github.com/FGcodework/plg_content_fgautolightbox/releases"><img src="https://img.shields.io/github/downloads/FGcodework/plg_content_fgautolightbox/total" alt="Downloads"></a>
+  <a href="https://github.com/FGcodework/plg_content_fgautolightbox/releases"><img src="https://img.shields.io/github/downloads/FGcodework/plg_content_fgautolightbox/total?color=brown" alt="Downloads"></a>
   <a href="https://ko-fi.com/FGcodework"><img src="https://img.shields.io/badge/support-Ko--fi-F16061.svg?logo=ko-fi&logoColor=white" alt="Support on Ko-fi"></a>
 </p>
 
