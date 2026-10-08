@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" alt="FG AutoLightbox" width="120">
+  <img src="assets/logo.webp" alt="FG AutoLightbox" width="120">
 </p>
 
 <h1 align="center">FG AutoLightbox plugin for Joomla</h1>
