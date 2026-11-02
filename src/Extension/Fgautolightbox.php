@@ -42,7 +42,7 @@ final class Fgautolightbox extends CMSPlugin implements SubscriberInterface
      * hodnota pre statické CSS/JS assety namiesto filemtime() (viď
      * getAssetCacheBuster() nižšie).
      */
-    private const string VERSION = '2.3.10';
+    private const string VERSION = '2.3.11';
 
     private static bool $assetsLoaded = false;
 
@@ -131,6 +131,13 @@ final class Fgautolightbox extends CMSPlugin implements SubscriberInterface
             return;
         }
 
+        // Extra CSS selectors (e.g. a template-rendered featured image outside
+        // the article text) are handled client-side, so the JS engine must be
+        // loaded even when the article text itself contains no images.
+        if (trim((string) $this->params->get('extra_selectors', '')) !== '') {
+            $this->ensureAssetsLoaded();
+        }
+
         if (empty($article->text)) {
             return;
         }
@@ -185,6 +192,7 @@ final class Fgautolightbox extends CMSPlugin implements SubscriberInterface
             'showNavigation' => (bool) (int) $this->params->get('show_navigation', 1),
             'preloadAdjacent' => (bool) (int) $this->params->get('preload_adjacent', 1),
             'watchContainer' => trim((string) $this->params->get('watch_container', '')),
+            'extraSelectors' => trim((string) $this->params->get('extra_selectors', '')),
             'allowedExtensions' => $this->csvList(
                 (string) $this->params->get('allowed_extensions', 'jpg,jpeg,png,gif,webp,avif'),
                 lowercase: true,

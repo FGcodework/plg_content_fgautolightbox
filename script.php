@@ -13,6 +13,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScriptInterface;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\DatabaseInterface;
 
 /**
  * Inštalačný preflight check - overí minimálnu verziu PHP a Joomly PRED
@@ -67,6 +68,20 @@ return new class () implements InstallerScriptInterface {
 
     public function postflight(string $type, InstallerAdapter $adapter): bool
     {
+        // Joomla leaves a freshly installed plugin disabled. Enable it on a
+        // first-time install only; on update the administrator's choice
+        // (enabled or disabled) is left untouched.
+        if ($type === 'install') {
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
+            $query = $db->getQuery(true)
+                ->update($db->quoteName('#__extensions'))
+                ->set($db->quoteName('enabled') . ' = 1')
+                ->where($db->quoteName('type') . ' = ' . $db->quote('plugin'))
+                ->where($db->quoteName('element') . ' = ' . $db->quote('fgautolightbox'))
+                ->where($db->quoteName('folder') . ' = ' . $db->quote('content'));
+            $db->setQuery($query)->execute();
+        }
+
         return true;
     }
 };

@@ -18,6 +18,7 @@
         captionMobile: false,
         watchDynamic: false,
         watchContainer: "",
+        extraSelectors: "",
         showNavigation: true,
         preloadAdjacent: true,
         allowedExtensions: ["jpg", "jpeg", "png", "gif", "webp", "avif"],
@@ -715,6 +716,23 @@
                 return picture ? picture.querySelector("img") : null;
             }
             return null;
+        }
+
+        // Voliteľné doplnkové CSS selektory (nastavenie "Extra CSS selectors"):
+        // obrázky mimo textu článku (napr. hlavný/Featured obrázok, ktorý
+        // vykresľuje šablóna), ktoré PHP strana nevidí. Selektor môže mieriť
+        // priamo na <img> alebo na jeho kontajner. Spracujú sa rovnakou
+        // cestou ako dynamicky pridané obrázky (wrapNewImage), takže platia
+        // všetky bežné pravidlá (povolené prípony, vylúčené triedy, ...).
+        if (ALB_CONFIG.extraSelectors) {
+            try {
+                var extraNodes = document.querySelectorAll(ALB_CONFIG.extraSelectors);
+                for (var xi = 0; xi < extraNodes.length; xi++) {
+                    scanForNewImages(extraNodes[xi]);
+                }
+            } catch (e) {
+                // neplatný selektor - ticho ignoruj, zvyšok pluginu funguje ďalej
+            }
         }
 
         if (ALB_CONFIG.watchDynamic && window.MutationObserver) {

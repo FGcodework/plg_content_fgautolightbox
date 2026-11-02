@@ -13,6 +13,15 @@ this file merges both changelogs into one continuous history: the
 native build's entries (2.x, current) first, followed by the classic
 build's entries (1.x, historical/frozen) below.
 
+## 2.3.11
+- Plugin is now enabled automatically on a first-time install
+  (`postflight`, install only; updates keep the administrator's choice).
+  Previously Joomla left it disabled, which looked like "does not work".
+- Removed the UTF-8 BOM from `fgautolightbox.xml` (and `updates.xml`).
+- New optional setting "Extra images (CSS selector)": adds the lightbox
+  to images outside the article text, e.g. the featured image rendered
+  by the template. Documented in the README.
+
 ## 2.3.10
 Added a "Plugin" info tab to the admin settings screen, matching the
 pattern already used on other plugins in the FG series (e.g. FG Editor

@@ -73,8 +73,8 @@ gap: editors change nothing, administrators install one plugin.
 1. Download the latest `plg_content_fgautolightbox_vX.Y.Z.zip` from
    [Releases](https://github.com/FGcodework/plg_content_fgautolightbox/releases)
 2. In Joomla admin: **System → Install → Extensions**, upload the ZIP
-3. Go to **System → Plugins**, search for `AutoLightbox`, and enable
-   **Content - FG AutoLightbox**
+3. The plugin is enabled automatically on a first-time install (verify in
+   **System → Plugins**, search for `AutoLightbox`)
 
 That's it — existing articles work immediately, no content changes needed.
 
@@ -104,12 +104,38 @@ All settings are optional; the defaults are sensible for a typical site.
 | Extra allowed contexts             | *(empty)*                    | Comma-separated contexts to process beyond the built-in ones — exact (`com_k2.item`) or a whole component via wildcard (`com_k2.*` or just `com_k2`); useful for K2, Zoo, custom components      |
 | Exclude components                 | *(empty)*                    | Comma-separated component names to skip (e.g. `com_contact`)                                                                                                                                     |
 | Exclude pages/URLs                 | *(empty)*                    | Comma-separated patterns matched against the page URL, with word-boundary awareness by default (`/12` matches `/12` or `/path/12`, but not `/120`); add `*` for deliberate broader matching (`/kontakt*`) |
+| Extra images (CSS selector)        | *(empty)*                    | Also add the lightbox to images **outside the article text**, such as the featured / intro / full-article image rendered by the template. See [Featured image](#featured-image-and-other-template-images) below |
 | Allowed file extensions            | `jpg,jpeg,png,gif,webp,avif` | Only these get a lightbox. SVG is excluded by default since it can carry embedded scripts. An empty list falls back to this same safe default rather than allowing everything                   |
 | Prefer srcset over data-src        | No (`data-src` wins)         | Some lazy-load libraries use `data-src` for the real full-size image (default), others use it only for a small placeholder while the real image lives in `srcset` — flip this if your lightbox opens a small/blurry thumbnail |
 | Enable gallery navigation          | Yes                          | Disable for a single-image viewer — no prev/next arrows, counter, or keyboard/swipe navigation between images                                                                                    |
 | Preload adjacent images            | Yes                          | Fetches the previous/next image in the background while the lightbox is open, for smoother navigation. Disable on very large galleries to skip the extra downloads                               |
 | Watch for dynamically added images | No                           | Enables the `MutationObserver` for images added after page load (AJAX, infinite scroll, sliders). Off by default since it isn't free — turn it on only if your site actually needs it            |
 | Watch container (CSS selector)     | *(empty)*                    | Only relevant if the above is enabled. Scope the `MutationObserver` to matching container(s) (e.g. `.item-page, .blog`) instead of the whole page, for better performance                        |
+
+### Featured image and other template images
+
+The plugin processes the article **text**. The featured (intro / full-article)
+image is rendered by your template outside that text, so it is not touched by
+default. To include it, put a CSS selector for it into **Extra images (CSS
+selector)** in the plugin settings:
+
+1. Open the page, right-click the image → **Inspect**, and look at the
+   classes / attributes of the image or its wrapper.
+2. Enter a selector that matches it. Several selectors can be separated by a
+   comma.
+3. Save and reload the page (clear caches if you use any).
+
+Examples:
+
+| Template                       | Selector                          |
+| ------------------------------ | --------------------------------- |
+| YOOtheme Pro (Blog media)      | `.uk-article [property=image] img` |
+| Any template, one specific img | `img.my-featured-class`           |
+| Whole header block             | `.article-header`                 |
+
+Notes: each such image opens on its own (it is not part of the article
+gallery); **Exclude CSS classes** and **Allowed file extensions** still
+apply. An invalid selector is silently ignored.
 
 ## Theming
 
