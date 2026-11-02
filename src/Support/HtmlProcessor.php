@@ -30,6 +30,7 @@ final class HtmlProcessor
         private readonly SrcSetResolver $srcSetResolver,
         private readonly LinkAttributes $linkAttributes,
         private readonly ExtensionFilter $extensionFilter,
+        private readonly ?MinWidthFilter $minWidthFilter = null,
     ) {
     }
 
@@ -118,6 +119,10 @@ final class HtmlProcessor
                 continue;
             }
 
+            if ($this->minWidthFilter !== null && !$this->minWidthFilter->passes($srcVal)) {
+                continue;
+            }
+
             $altValue = $img->getAttribute('alt');
             if ($altValue === '' && $img->hasAttribute('data-alt')) {
                 $altValue = $img->getAttribute('data-alt');
@@ -181,9 +186,20 @@ final class HtmlProcessor
                 continue;
             }
 
+            // Odkaz, ktorý sme PRÁVE vytvorili v prvom prechode vyššie, sa tu
+            // znova nespracúva - inak by sa jeho trieda zdvojila
+            // ("alb-link x alb-link x") a obrázok by sa započítal dvakrát.
+            if (\in_array('alb-link', preg_split('/\s+/', trim($anchor->getAttribute('class'))) ?: [], true)) {
+                continue;
+            }
+
             $href = $anchor->getAttribute('href');
             if ($href === '' || !$this->extensionFilter->isAllowed($href)) {
                 continue; // cudzí odkaz (PDF, iná stránka...) - nedotýkať sa
+            }
+
+            if ($this->minWidthFilter !== null && !$this->minWidthFilter->passes($href)) {
+                continue;
             }
 
             // Predtým sa tu odkaz s existujúcim rel (napr. rel="nofollow")

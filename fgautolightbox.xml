@@ -7,7 +7,7 @@
     <copyright>Copyright (C) 2026 FG. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <creationDate>2026-08-23</creationDate>
-    <version>2.3.11</version>
+    <version>2.4.0</version>
     <description>PLG_CONTENT_FGAUTOLIGHTBOX_XML_DESCRIPTION</description>
     <scriptfile>script.php</scriptfile>
     <namespace path="src">FG\Plugin\Content\Fgautolightbox</namespace>
@@ -100,6 +100,33 @@
                     default=""
                     label="PLG_CONTENT_FGAUTOLIGHTBOX_FIELD_EXCLUDE_URLS_LABEL"
                     description="PLG_CONTENT_FGAUTOLIGHTBOX_FIELD_EXCLUDE_URLS_DESC"
+                />
+                <field
+                    name="exclude_categories"
+                    type="category"
+                    extension="com_content"
+                    multiple="true"
+                    layout="joomla.form.field.list-fancy-select"
+                    default=""
+                    label="PLG_CONTENT_FGAUTOLIGHTBOX_FIELD_EXCLUDE_CATEGORIES_LABEL"
+                    description="PLG_CONTENT_FGAUTOLIGHTBOX_FIELD_EXCLUDE_CATEGORIES_DESC"
+                />
+                <field
+                    name="exclude_article_ids"
+                    type="text"
+                    default=""
+                    label="PLG_CONTENT_FGAUTOLIGHTBOX_FIELD_EXCLUDE_ARTICLES_LABEL"
+                    description="PLG_CONTENT_FGAUTOLIGHTBOX_FIELD_EXCLUDE_ARTICLES_DESC"
+                />
+                <field
+                    name="min_width"
+                    type="number"
+                    default="0"
+                    min="0"
+                    max="5000"
+                    step="10"
+                    label="PLG_CONTENT_FGAUTOLIGHTBOX_FIELD_MIN_WIDTH_LABEL"
+                    description="PLG_CONTENT_FGAUTOLIGHTBOX_FIELD_MIN_WIDTH_DESC"
                 />
                 <field
                     name="extra_selectors"

@@ -16,6 +16,7 @@ use FG\Plugin\Content\Fgautolightbox\Support\ContentScopeResolver;
 use FG\Plugin\Content\Fgautolightbox\Support\ExtensionFilter;
 use FG\Plugin\Content\Fgautolightbox\Support\HtmlProcessor;
 use FG\Plugin\Content\Fgautolightbox\Support\LinkAttributes;
+use FG\Plugin\Content\Fgautolightbox\Support\MinWidthFilter;
 use FG\Plugin\Content\Fgautolightbox\Support\SrcSetResolver;
 use Joomla\CMS\Event\Content\ContentPrepareEvent;
 use Joomla\CMS\Language\Text;
@@ -42,7 +43,7 @@ final class Fgautolightbox extends CMSPlugin implements SubscriberInterface
      * hodnota pre statické CSS/JS assety namiesto filemtime() (viď
      * getAssetCacheBuster() nižšie).
      */
-    private const string VERSION = '2.3.11';
+    private const string VERSION = '2.4.0';
 
     private static bool $assetsLoaded = false;
 
@@ -83,6 +84,12 @@ final class Fgautolightbox extends CMSPlugin implements SubscriberInterface
             $this->srcSetResolver,
             new LinkAttributes(),
             ExtensionFilter::fromCsv((string) $this->params->get('allowed_extensions', 'jpg,jpeg,png,gif,webp,avif')),
+            new MinWidthFilter(
+                min(5000, max(0, (int) $this->params->get('min_width', 0))),
+                JPATH_ROOT,
+                Uri::root(true),
+                (string) Uri::getInstance()->getHost(),
+            ),
         );
     }
 
@@ -131,6 +138,10 @@ final class Fgautolightbox extends CMSPlugin implements SubscriberInterface
             return;
         }
 
+        if ($this->isExcludedByContent($context, $article)) {
+            return;
+        }
+
         // Extra CSS selectors (e.g. a template-rendered featured image outside
         // the article text) are handled client-side, so the JS engine must be
         // loaded even when the article text itself contains no images.
@@ -165,6 +176,73 @@ final class Fgautolightbox extends CMSPlugin implements SubscriberInterface
         if ($wrappedCount > 0 || $watchDynamic) {
             $this->ensureAssetsLoaded();
         }
+    }
+
+    /**
+     * Vylúčenie podľa kategórie (vrátane podkategórií) a ID článku. Týka sa
+     * len obsahu com_content - iné komponenty nemajú rovnaké ID/catid
+     * (kolízia ID by vylúčila nesúvisiaci záznam).
+     */
+    private function isExcludedByContent(string $context, object $article): bool
+    {
+        if ($this->scopeResolver->componentOf($context) !== 'com_content') {
+            return false;
+        }
+
+        // Popis kategórie: samotný záznam JE kategória (nemá catid) a zoznam
+        // vylúčených článkov sa naň nevzťahuje.
+        $isCategoryDescription = str_starts_with($context, 'com_content.categor') && !isset($article->catid);
+
+        $excludedCategories = array_values(array_filter(array_map('intval', (array) $this->params->get('exclude_categories', []))));
+
+        if ($excludedCategories !== []) {
+            $catId = $isCategoryDescription ? (int) ($article->id ?? 0) : (int) ($article->catid ?? 0);
+
+            if ($catId > 0 && $this->isInExcludedCategory($catId, $excludedCategories)) {
+                return true;
+            }
+        }
+
+        if (!$isCategoryDescription) {
+            $excludedArticles = array_map('intval', $this->csvList((string) $this->params->get('exclude_article_ids', '')));
+
+            if ($excludedArticles !== [] && isset($article->id) && \in_array((int) $article->id, $excludedArticles, true)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Prejde strom kategórií smerom ku koreňu, takže vylúčenie rodiča vylúči
+     * aj všetky podkategórie. Poistka proti cyklickému stromu: max 100 krokov.
+     *
+     * @param int[] $excluded
+     */
+    private function isInExcludedCategory(int $catId, array $excluded): bool
+    {
+        try {
+            $categories = $this->getApplication()->bootComponent('com_content')->getCategory();
+        } catch (\Throwable) {
+            return \in_array($catId, $excluded, true); // bez služby len priama zhoda
+        }
+
+        for ($guard = 0; $catId > 0 && $guard < 100; $guard++) {
+            if (\in_array($catId, $excluded, true)) {
+                return true;
+            }
+
+            $node = $categories->get($catId);
+
+            if ($node === null) {
+                break;
+            }
+
+            $catId = (int) $node->parent_id;
+        }
+
+        return false;
     }
 
     private function ensureAssetsLoaded(): void

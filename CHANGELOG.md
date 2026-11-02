@@ -13,6 +13,26 @@ this file merges both changelogs into one continuous history: the
 native build's entries (2.x, current) first, followed by the classic
 build's entries (1.x, historical/frozen) below.
 
+## 2.4.0
+New filtering options, inspired by a review of a similar plugin.
+
+- New setting "Minimum image width (px)": only images whose original
+  file on disk is at least that wide get a lightbox, so icons and small
+  decorations are skipped without listing CSS classes. Off by default
+  (0). Local images only; remote images, SVG and unmeasurable files are
+  never filtered (fail open). Width is read from the file header
+  (`getimagesize`), cached per request, and the path is validated
+  against traversal.
+- New setting "Exclude categories": skips articles in the chosen
+  categories and all of their subcategories.
+- New setting "Exclude articles (IDs)": skips specific articles.
+- Fixed: links created by the plugin itself were processed a second
+  time by the "upgrade editor-made image links" pass, which duplicated
+  the CSS class (`alb-link x alb-link x`) and counted each image twice.
+  Harmless visually, but now clean.
+- Both apply to com_content only (other components may reuse the same
+  IDs for unrelated records).
+
 ## 2.3.11
 - Plugin is now enabled automatically on a first-time install
   (`postflight`, install only; updates keep the administrator's choice).
