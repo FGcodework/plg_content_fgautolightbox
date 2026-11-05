@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FG AutoLightbox - Live demo</title>
+<meta name="description" content="Live demo of FG AutoLightbox, a Joomla 6 content plugin that adds a lightbox to every article image automatically.">
+<link rel="stylesheet" href="assets/fgautolightbox.css">
+<style>
+  :root {
+    --bg: #f6f7fb; --card: #ffffff; --ink: #1d2433; --muted: #5d6677;
+    --line: #dfe3ec; --accent: #1f6feb; --accent-ink: #ffffff; --chip: #eaf1fe;
+    --radius: 14px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f131c; --card: #171c28; --ink: #e8ecf5; --muted: #9aa5ba;
+      --line: #263044; --accent: #5b9bff; --accent-ink: #0b1220; --chip: #1c2740;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f131c; --card: #171c28; --ink: #e8ecf5; --muted: #9aa5ba;
+    --line: #263044; --accent: #5b9bff; --accent-ink: #0b1220; --chip: #1c2740;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 16px; }
+  header.top { padding: 40px 0 8px; }
+  .brand { display: flex; align-items: center; gap: 16px; }
+  .brand img { width: 64px; height: 64px; border-radius: 14px; flex: none; }
+  h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.2; margin: 0; }
+  .tag { color: var(--muted); margin: 4px 0 0; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 0; }
+  .btn {
+    display: inline-block; padding: 9px 16px; border-radius: 10px; font-weight: 600;
+    text-decoration: none; border: 1px solid var(--line); color: var(--ink); background: var(--card);
+  }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .btn:hover { filter: brightness(1.06); }
+  .btn:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .hint {
+    margin: 22px 0 0; padding: 12px 16px; background: var(--chip); border-radius: 10px;
+    color: var(--ink); font-size: .95rem;
+  }
+  section.demo {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 22px; margin: 22px 0;
+  }
+  section.demo h2 { margin: 0 0 4px; font-size: 1.25rem; }
+  section.demo > p { margin: 0 0 16px; color: var(--muted); }
+  code { background: var(--chip); padding: 1px 6px; border-radius: 6px; font-size: .9em; }
+  .badge {
+    display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+    text-transform: uppercase; background: var(--chip); color: var(--accent);
+    padding: 2px 8px; border-radius: 999px; margin-left: 8px; vertical-align: middle;
+  }
+  .demo-hero img { display: block; width: 100%; height: auto; border-radius: 10px; cursor: zoom-in; }
+  .grid { display: grid; gap: 12px; grid-template-columns: repeat(3, 1fr); }
+  .grid a { display: block; }
+  .grid img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 10px; }
+  .grid.two { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 560px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+  .row figure { margin: 0; }
+  .row figure img { display: block; border-radius: 10px; }
+  .row figcaption { font-size: .85rem; color: var(--muted); margin-top: 4px; }
+  button.btn { cursor: pointer; font: inherit; font-weight: 600; }
+  #dyn-grid { margin-top: 14px; }
+  #dyn-grid:empty { display: none; }
+  ul.features { padding-left: 1.2em; margin: 0; }
+  ul.features li { margin: 5px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  footer { padding: 18px 0 56px; color: var(--muted); font-size: .9rem; }
+  footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <img src="assets/logo.png" alt="" width="64" height="64">
+      <div>
+        <h1>FG AutoLightbox</h1>
+        <p class="tag">Joomla 6 content plugin - a lightbox for every article image, with no editor work.</p>
+      </div>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="https://github.com/FGcodework/plg_content_fgautolightbox/releases/latest">Download</a>
+      <a class="btn" href="https://github.com/FGcodework/plg_content_fgautolightbox">GitHub</a>
+      <a class="btn" href="https://ko-fi.com/fgcodework">Support on Ko-fi</a>
+    </div>
+    <p class="hint"><strong>This page runs the real plugin script.</strong> Click any image below. Use the arrow keys, swipe on a touch screen, or press <code>Esc</code> to close.</p>
+  </header>
+
+  <main>
+
+    <section class="demo" id="featured">
+      <h2>1. Featured image <span class="badge">CSS selector</span></h2>
+      <p>The featured image is rendered by the template outside the article text, so the plugin cannot see it by default. Enter a CSS selector in the plugin settings (here <code>.demo-hero img</code>) and it gets the lightbox as well.</p>
+      <div class="demo-hero">
+        <img src="img/hero.jpg" width="1800" height="640" alt="Sunset over layered purple hills">
+      </div>
+    </section>
+
+    <section class="demo" id="gallery">
+      <h2>2. Automatic gallery</h2>
+      <p>Images in the article text are wrapped on the server and grouped per article. Open one and move through the whole set.</p>
+      <div class="grid">
+        <a href="img/g1.jpg" class="alb-link autolightbox" data-alb-group="autolightbox-gallery:1" title="Morning meadow" data-alb-alt="Morning meadow"><img src="img/g1.jpg" width="1600" height="1000" loading="lazy" alt="Morning meadow"></a>
+        <a href="img/g2.jpg" class="alb-link autolightbox" data-alb-group="autolightbox-gallery:1" title="Warm dusk" data-alb-alt="Warm dusk"><img src="img/g2.jpg" width="1600" height="1000" loading="lazy" alt="Warm dusk"></a>
+        <a href="img/g3.jpg" class="alb-link autolightbox" data-alb-group="autolightbox-gallery:1" title="Blue night" data-alb-alt="Blue night"><img src="img/g3.jpg" width="1600" height="1000" loading="lazy" alt="Blue night"></a>
+        <a href="img/g4.jpg" class="alb-link autolightbox" data-alb-group="autolightbox-gallery:1" title="Teal valley" data-alb-alt="Teal valley"><img src="img/g4.jpg" width="1600" height="1000" loading="lazy" alt="Teal valley"></a>
+        <a href="img/g5.jpg" class="alb-link autolightbox" data-alb-group="autolightbox-gallery:1" title="Rose horizon" data-alb-alt="Rose horizon"><img src="img/g5.jpg" width="1600" height="1000" loading="lazy" alt="Rose horizon"></a>
+        <a href="img/g6.jpg" class="alb-link autolightbox" data-alb-group="autolightbox-gallery:1" title="Golden fields" data-alb-alt="Golden fields"><img src="img/g6.jpg" width="1600" height="1000" loading="lazy" alt="Golden fields"></a>
+      </div>
+    </section>
+
+    <section class="demo" id="groups">
+      <h2>3. Separate galleries</h2>
+      <p>Each article is its own group. These two images belong to a different article, so the arrows stay inside this pair and never jump to the gallery above.</p>
+      <div class="grid two">
+        <a href="img/x1.jpg" class="alb-link autolightbox" data-alb-group="autolightbox-gallery:2" title="Other article, picture one" data-alb-alt="Other article, picture one"><img src="img/x1.jpg" width="1600" height="1000" loading="lazy" alt="Other article, picture one"></a>
+        <a href="img/x2.jpg" class="alb-link autolightbox" data-alb-group="autolightbox-gallery:2" title="Other article, picture two" data-alb-alt="Other article, picture two"><img src="img/x2.jpg" width="1600" height="1000" loading="lazy" alt="Other article, picture two"></a>
+      </div>
+    </section>
+
+    <section class="demo" id="dynamic">
+      <h2>4. Images added later <span class="badge">watch dynamic</span></h2>
+      <p>Images inserted by scripts after the page has loaded (infinite scroll, tabs, accordions, AJAX) are picked up automatically. Press the button, then click the new picture.</p>
+      <button type="button" class="btn primary" id="add-img">Add an image to the page</button>
+      <div class="grid" id="dyn-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="demo" id="excluded">
+      <h2>5. Opt-out for single images</h2>
+      <p>Give an image the CSS class <code>noshadow</code> (configurable under <em>Exclude CSS classes</em>) and the plugin leaves it alone. Same image, two behaviours:</p>
+      <div class="row">
+        <figure>
+          <a href="img/g4.jpg" class="alb-link autolightbox" data-alb-group="autolightbox-gallery:3" title="Teal valley" data-alb-alt="Teal valley"><img src="img/g4.jpg" width="220" height="138" alt="Teal valley, with lightbox"></a>
+          <figcaption>Normal - opens in the lightbox</figcaption>
+        </figure>
+        <figure>
+          <img class="noshadow" src="img/g4.jpg" width="220" height="138" alt="Teal valley, excluded">
+          <figcaption>Class <code>noshadow</code> - left untouched</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="demo" id="features">
+      <h2>What it does</h2>
+      <ul class="features">
+        <li>Wraps every image in article text automatically - nothing to configure for editors.</li>
+        <li>Gallery per article with arrows, keyboard, swipe and neighbour preloading.</li>
+        <li>Accessible dialog: focus trap, <code>Esc</code> to close, focus returns to the clicked image.</li>
+        <li>Uses the biggest available source (<code>data-full</code>, <code>srcset</code>) for the enlarged view.</li>
+        <li>Caption from alt text or file name; respects <code>prefers-reduced-motion</code>.</li>
+        <li>Works with images added later, and with images outside the article via CSS selectors.</li>
+        <li>Filters: allowed file extensions, minimum image width, excluded classes, categories, articles and URLs.</li>
+        <li>Lightweight: no jQuery, no external libraries, one small script and stylesheet.</li>
+      </ul>
+    </section>
+
+    <section class="demo" id="install">
+      <h2>Install</h2>
+      <p>Requires Joomla 6 and PHP 8.3 or newer.</p>
+      <table>
+        <tr><th>1</th><td>Download the ZIP from the <a href="https://github.com/FGcodework/plg_content_fgautolightbox/releases/latest">latest release</a>.</td></tr>
+        <tr><th>2</th><td><strong>System - Install - Extensions</strong>, upload the ZIP. The plugin is enabled automatically.</td></tr>
+        <tr><th>3</th><td>Open an article with images on the site. That is all - settings are optional.</td></tr>
+      </table>
+    </section>
+
+  </main>
+
+  <footer>
+    FG AutoLightbox is free and open source (GPL-2.0-or-later). Part of the <a href="https://fgcodework.github.io/">FGcodework</a> Joomla extension series.
+    The pictures on this page are generated artwork.
+  </footer>
+</div>
+
+<script>
+  window.FG_AUTOLIGHTBOX_CONFIG = {
+    linkClass: "autolightbox",
+    galleryGroup: "autolightbox-gallery",
+    excludeClasses: ["noshadow"],
+    showCaption: "alt",
+    captionMobile: false,
+    watchDynamic: true,
+    showNavigation: true,
+    preloadAdjacent: true,
+    watchContainer: "",
+    extraSelectors: ".demo-hero img",
+    allowedExtensions: ["jpg", "jpeg", "png", "gif", "webp", "avif"]
+  };
+</script>
+<script src="assets/fgautolightbox.js" defer></script>
+<script>
+  (function () {
+    var pool = [
+      ["img/x3.jpg", "Fresh from a script: green coast"],
+      ["img/x1.jpg", "Fresh from a script: blue dusk"],
+      ["img/x2.jpg", "Fresh from a script: ember sky"]
+    ];
+    var n = 0, grid = document.getElementById("dyn-grid"), btn = document.getElementById("add-img");
+    btn.addEventListener("click", function () {
+      var p = pool[n % pool.length]; n++;
+      var img = document.createElement("img");
+      img.src = p[0]; img.alt = p[1] + " (#" + n + ")";
+      img.width = 1600; img.height = 1000; img.loading = "lazy";
+      img.style.cssText = "display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:10px";
+      var cell = document.createElement("div");
+      cell.appendChild(img);
+      grid.appendChild(cell);
+    });
+  })();
+</script>
+</body>
+</html>
